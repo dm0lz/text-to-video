@@ -53,10 +53,20 @@ def rephrase(sentences):  # Rephrase sentences exceeding 220 characters (bark ou
     sentences_array = []
     for prompt in sentences:
         if (len(prompt) > 220):
-            completion = openai.ChatCompletion.create(model="gpt-4", messages=[{"role": "user", "content": f"split in multiple sentences with maximum length of 220 characters per sentence the following text : {prompt}"}])
-            split_sentence = nltk.sent_tokenize(completion.choices[0].message.content)
-            sentences_array.extend(split_sentence)
-            print(f"sentence {prompt} was split into {split_sentence}")
+            max_attempts = 3
+            for attempt in range(max_attempts):
+                try:
+                    completion = openai.ChatCompletion.create(model="gpt-4", messages=[{"role": "user", "content": f"split in multiple sentences with maximum length of 220 characters per sentence the following text : {prompt}"}])
+                    split_sentence = nltk.sent_tokenize(completion.choices[0].message.content)
+                    sentences_array.extend(split_sentence)
+                    print(f"sentence {prompt} was split into {split_sentence}")
+                    break
+                except Exception as e:
+                    print(f"Openai Attempt {attempt + 1} failed: {str(e)}")
+                    if attempt < max_attempts - 1:
+                        print(f"Openai Retrying... (attempt {attempt}/{max_attempts})")
+                    else:
+                        print("Openai Max retry attempts reached. Operation failed.")
         else:
             sentences_array.append(prompt)
     return sentences_array
