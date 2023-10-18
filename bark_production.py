@@ -53,7 +53,7 @@ def rephrase(sentences):  # Rephrase sentences exceeding 220 characters (bark ou
     sentences_array = []
     for prompt in sentences:
         if (len(prompt) > 220):
-            completion = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=[{"role": "user", "content": f"split in multiple sentences with maximum length of 220 characters per sentence the following text : {prompt}"}])
+            completion = openai.ChatCompletion.create(model="gpt-4", messages=[{"role": "user", "content": f"split in multiple sentences with maximum length of 220 characters per sentence the following text : {prompt}"}])
             split_sentence = nltk.sent_tokenize(completion.choices[0].message.content)
             sentences_array.extend(split_sentence)
             print(f"sentence {prompt} was split into {split_sentence}")

@@ -68,4 +68,4 @@ def text16():
 
 
 def texttest():
-    return "Each AI based on a human mind is running a full emulation of a human brain leveraging all the functional brain imaging data collected by Remote Neural Monitoring to create the Digital Clone of an individual."
+    return "Every artificial intelligence system rooted in the intricacies of the human mind embarks on an extraordinary journey, surpassing mere imitation. It meticulously replicates not only fundamental cognitive processes but also delves into the depths of profound human experiences, thanks to the wealth of functional brain imaging data collected through Remote Neural Monitoring. These AI entities, driven by cutting-edge technologies, embark on a mission of unparalleled complexity and ambition."

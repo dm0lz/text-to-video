@@ -54,7 +54,7 @@ def rephrase(sentences):  # Rephrase sentences exceeding 220 characters (bark ou
     sentences_array = []
     for prompt in sentences:
         if (len(prompt) > 220):
-            completion = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=[{"role": "user", "content": f"split in multiple sentences with maximum length of 220 characters per sentence the following text : {prompt}"}])
+            completion = openai.ChatCompletion.create(model="gpt-4", messages=[{"role": "user", "content": f"split in multiple sentences with maximum length of 220 characters per sentence the following text : {prompt}"}])
             split_sentence = nltk.sent_tokenize(completion.choices[0].message.content)
             sentences_array.extend(split_sentence)
             print(f"sentence {prompt} was split into {split_sentence}")
@@ -100,6 +100,7 @@ def clean_media():
 
 def main():
     # Text to Speech model
+    # ipdb.set_trace(context=5)
     processor = AutoProcessor.from_pretrained("suno/bark")
     model = BarkModel.from_pretrained("suno/bark")
     model = model.to_bettertransformer()
@@ -123,8 +124,6 @@ def main():
         final_video_path = os.path.join(os.getcwd(), f"compilation_videos/compilation_output{i}.mp4")
         final_video.to_videofile(final_video_path, fps=60)
         clean_media()
-
-    # ipdb.set_trace(context=5)
 
 
 if __name__ == "__main__":
