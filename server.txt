@@ -1,0 +1,156 @@
+1  wget https://developer.download.nvidia.com/compute/cuda/12.2.2/local_installers/cuda-repo-debian11-12-2-local_12.2.2-535.104.05-1_amd64.deb
+2  sudo dpkg -i cuda-repo-debian11-12-2-local_12.2.2-535.104.05-1_amd64.deb
+3  sudo cp /var/cuda-repo-debian11-12-2-local/cuda-*-keyring.gpg /usr/share/keyrings/
+4  sudo apt install software-properties-common
+5  sudo add-apt-repository contrib
+6  sudo apt-get update
+7  sudo apt-get -y install cuda
+8  ls
+9  mkdir text-to-video
+10  exit
+11  ls
+12  rm -rf text-to-video/
+13  cd text-to-video-main/
+14  ls
+15  vim bark.py
+16  ls -lah
+17  rm gtts.py
+18  rm pyttsx3.py
+19  ls -lah
+20  sudo apt install python3-pip
+21  pip3 install -r requirements.txt
+22  vim requirements.txt
+23  pip3 install -r requirements.txt
+24  vim ~/.bashrc
+25  ls -lahR
+26  python3 bark.py
+27  source ~/.bashrc
+28  python3 bark.py
+29  python3
+30  pip3 install torch torchvision torchaudio
+31  python3
+32  cat bark.py
+33  lspci | grep -i nvidia
+34  uname -m && cat /etc/*release
+35  gcc --version
+36  uname -r
+37  sudo reboot
+38  python3
+39  sudo apt install nvidia-cuda-toolkit
+40  nvcc --version
+41  which cua
+42  which cuda
+43  ls
+44  sudo apt update
+45  sudo apt install nvidia-cuda-toolkit
+46  history
+47  cd text-to-video-main/
+48  ls
+49  pip3 install cudatoolkit
+50  ls -lahR ../.local/
+51  ls -laR ../.local/
+52  ls -lah ../.local/
+53  ls -lah ../.local/bin/
+54  sudo apt install cuda
+55  which cuda
+56  cat ~/.bashrc
+57  source ~/.bashrc
+58  nvcc -v
+59  vim ~/.bashrc
+60  source ~/.bashrc
+61  nvcc -v
+62  nvcc --version
+63  python3
+64  pip3 install torch torchvision torchaudio
+65  pip3 install pytorch
+66  pip3 install pytorch-cuda
+67  python3
+68  nvidia-smi
+69  sudo apt install nvidia-driver
+70  history
+71  sudo apt-get install linux-headers-$(uname -r)
+72  nvidia-smi
+73  python3
+74  ls -lah
+75  python3 bark.py
+76  ls -lahR
+77  sudo apt update && sudo apt upgrade
+78  sudo apt install libpng-dev libjpeg-dev libtiff-dev
+79  sudo apt install imagemagick
+80  vim bark.py
+81  cat bark.py
+82  python3 bark.py
+83  vim bark.py
+84  python3 bark.py
+85  ls
+86  ls -lahR
+87  rm images/*
+88  rm audios/*
+89  ls -lahR
+90  python3 bark.py
+91  history
+92  which convert
+93  convert -v
+94  vim /etc/ImageMagick-6/policy.xml
+95  cat /etc/ImageMagick-6/policy.xml
+96  vim /etc/ImageMagick-6/policy.xml
+97  sudo vim /etc/ImageMagick-6/policy.xml
+98  rm audios/* images/*
+99  ls -lahR
+100  python3 bark.py
+101  ls -lah
+102  exit
+103  htop
+104  ps aux
+105  kill -9 130729
+106  htop
+107  cd text-to-video-main/
+108  ls
+109  rm logs.log nohup.out
+110  ls -lah
+111  ls -lahR
+112  rm audios/* videos/* images/*
+113  ls -lahR
+114  nohup python3 bark.py > logs.log 2>&1 &
+115  ls -lah
+116  tail -f logs.log
+117  htop
+118  tail -f logs.log
+119  vim bark.py
+120  cat bark.py
+121  vim bark.py
+122  cat bark.py
+123  ls -lah
+124  tail -f logs.log
+125  ls -lahR
+126  tail -10000 logs.log
+127  htop
+128  ls -lah
+129  rm logs.log
+130  python3
+131  ls -lahR
+132  cat bark.py
+133  vim bark.py
+134  htop
+135  cat bark.py
+136  ls -lah
+137  mkdir compilation_videos
+138  vim bark.py
+139  cat bark.py
+140  ls
+141  python3
+142  vim bark.py
+143  cat bark.py
+144  ls
+145  ls -lahR
+146  cat bark.py
+147  htop
+148  nohup python3 bark.py > logs.log 2>&1 &
+149  tail -f logs.log
+150  history
+
+
+nohup COMMAND &>/dev/null &
+nohup COMMAND > logs.log 2>&1 &
+
+nohup python3 bark.py > logs.log 2>&1 &

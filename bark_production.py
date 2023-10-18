@@ -4,12 +4,11 @@ import scipy
 from transformers import AutoProcessor, BarkModel
 import nltk
 import re
-import torch
 import openai
 import rnm_text
 import PIL
 import os
-import ipdb
+import torch
 
 PIL.Image.ANTIALIAS = PIL.Image.LANCZOS
 openai.api_key = os.environ['OPENAI_API_KEY']
@@ -17,7 +16,7 @@ openai.api_key = os.environ['OPENAI_API_KEY']
 
 def generate_audio(prompt, prompt_index, model, processor):
     voice_preset = "v2/en_speaker_6"
-    inputs = processor(prompt, voice_preset=voice_preset)
+    inputs = processor(prompt, voice_preset=voice_preset).to(device())
     audio_array = model.generate(**inputs)
     audio_array = audio_array.cpu().numpy().squeeze()
     sample_rate = model.generation_config.sample_rate
@@ -84,6 +83,10 @@ def text_to_videos(sentences_array, model, processor, pipe):
     return videos_array
 
 
+def device():
+    return "cuda:0" if torch.cuda.is_available() else "cpu"
+
+
 def files_path(folder):
     folder_path = os.path.join(os.getcwd(), f"{folder}/")
     files_name = os.listdir(folder_path)
@@ -99,32 +102,29 @@ def clean_media():
 
 
 def main():
-    # Text to Speech model
-    processor = AutoProcessor.from_pretrained("suno/bark")
     model = BarkModel.from_pretrained("suno/bark")
+    model = model.to(device())
     model = model.to_bettertransformer()
+    model.enable_cpu_offload()
+    processor = AutoProcessor.from_pretrained("suno/bark")
 
-    # Text to Image model
     model_id = "stabilityai/stable-diffusion-xl-base-1.0"
-    pipe = DiffusionPipeline.from_pretrained(model_id, torch_dtype=torch.float32, variant="fp16", use_safetensors=True)
+    pipe = DiffusionPipeline.from_pretrained(model_id, torch_dtype=torch.float32, variant="fp16", use_safetensors=True).to(torch.device("cuda"))
 
-    text_array = [rnm_text.texttest()]
+    text_array = [rnm_text.text2(), rnm_text.text3(), rnm_text.text4(), rnm_text.text5(), rnm_text.text6(), rnm_text.text7(), rnm_text.text8(), rnm_text.text9(),
+                  rnm_text.text10(), rnm_text.text11(), rnm_text.text12(), rnm_text.text13(), rnm_text.text14(), rnm_text.text15(), rnm_text.text16()]
     for i, text in enumerate(text_array):
-        # Text Tokenization
         text = re.sub(r'\.(?=[^\s])', '. ', text)
         nltk.download('punkt')
         sentences = nltk.sent_tokenize(text)
         print(f"{len(sentences)} sentences")
-
         sentences_array = rephrase(sentences)
         print(f"{len(sentences_array)} split sentences to translate to speech")
         videos_array = text_to_videos(sentences_array, model, processor, pipe)
         final_video = concatenate_videoclips(videos_array, method='compose')
-        final_video_path = os.path.join(os.getcwd(), f"compilation_videos/compilation_output{i}.mp4")
+        final_video_path = os.path.join(os.getcwd(), f"compilation_videos/compilation_output{i+2}.mp4")
         final_video.to_videofile(final_video_path, fps=60)
         clean_media()
-
-    # ipdb.set_trace(context=5)
 
 
 if __name__ == "__main__":
