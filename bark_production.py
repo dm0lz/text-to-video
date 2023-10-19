@@ -123,7 +123,7 @@ def last_char(str):
 
 
 def bark_sentences(text):
-    words = nltk.word_tokenize(text)
+    words = nltk.wordpunct_tokenize(text)
     sentences = []
     sentence = ""
     for i, word in enumerate(words):
@@ -131,7 +131,7 @@ def bark_sentences(text):
             if (word in string_punctuation()):
                 sentence = f"{sentence}{word}"
             else:
-                sentence = f"{sentence}{word}" if last_char(sentence) == "’" else f"{sentence} {word}"
+                sentence = f"{sentence}{word}" if last_char(sentence) in "’'" else f"{sentence} {word}"
             if (i == len(words)-1):
                 sentences.append(sentence)
         else:
