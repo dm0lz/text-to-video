@@ -47,6 +47,8 @@ def generate_video(prompt, prompt_index, audio_file, image_file):
     video_file = f"video_{prompt_index}.mp4"
     full_path = os.path.join(os.getcwd(), f"videos/{video_file}")
     final_video.write_videofile(full_path, fps=60)
+    for media in [audio, image, final_video]:
+        media.close()
     return full_path
 
 
@@ -108,9 +110,23 @@ def clean_media():
     [os.remove(file) for file in files_list]
 
 
+def bark_sentences(text):
+    words = nltk.word_tokenize(text)
+    sentences = []
+    sentence = ""
+    for i, word in enumerate(words):
+        if (len(sentence) + len(word) < 220):
+            sentence = f"{sentence} {word}"
+            if (i == len(words)-1):
+                sentences.append(sentence)
+        else:
+            sentences.append(sentence)
+            sentence = word
+    return sentences
+
+
 def main():
     # Text to Speech model
-    # ipdb.set_trace(context=5)
     processor = AutoProcessor.from_pretrained("suno/bark")
     model = BarkModel.from_pretrained("suno/bark")
     model = model.to_bettertransformer()
@@ -126,9 +142,11 @@ def main():
         nltk.download('punkt')
         sentences = nltk.sent_tokenize(text)
         print(f"{len(sentences)} sentences")
-
-        sentences_array = rephrase(sentences)
+        sentences_array = []
+        for sentence in sentences:
+            sentences_array.extend(bark_sentences(sentence))
         print(f"{len(sentences_array)} split sentences to translate to speech")
+        # ipdb.set_trace(context=5)
         videos_array = text_to_videos(sentences_array, model, processor, pipe)
         final_video = concatenate_videoclips(videos_array, method='compose')
         final_video_path = os.path.join(os.getcwd(), f"compilation_videos/compilation_output{i}.mp4")
