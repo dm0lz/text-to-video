@@ -8,6 +8,7 @@ import openai
 import rnm_text
 import PIL
 import os
+import string
 import torch
 
 PIL.Image.ANTIALIAS = PIL.Image.LANCZOS
@@ -36,7 +37,7 @@ def generate_image(prompt, prompt_index, pipe):
 
 def generate_video(prompt, prompt_index, audio_file, image_file):
     audio = AudioFileClip(audio_file)
-    text = TextClip(prompt, fontsize=20, color='white', size=(640, 140), bg_color='black', method='caption', align='south')
+    text = TextClip(prompt, fontsize=25, color='white', size=(640, 140), bg_color='black', method='caption', align='south')
     text = text.set_position(('center', 'bottom')).set_duration(audio.duration)
     image = ImageClip(image_file)
     image = image.resize(width=text.w)
@@ -119,7 +120,7 @@ def bark_sentences(text):
     sentence = ""
     for i, word in enumerate(words):
         if (len(sentence) + len(word) < 220):
-            sentence = f"{sentence} {word}"
+            sentence = f"{sentence}{word}" if (word in (string.punctuation + "’")) else f"{sentence} {word}"
             if (i == len(words)-1):
                 sentences.append(sentence)
         else:
