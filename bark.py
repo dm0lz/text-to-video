@@ -111,13 +111,24 @@ def clean_media():
     [os.remove(file) for file in files_list]
 
 
+def string_punctuation():
+    return string.punctuation + "’"
+
+
+def last_char(str):
+    return str[-1] if (len(str) > 0) else ''
+
+
 def bark_sentences(text):
     words = nltk.word_tokenize(text)
     sentences = []
     sentence = ""
     for i, word in enumerate(words):
         if (len(sentence) + len(word) < 220):
-            sentence = f"{sentence}{word}" if (word in (string.punctuation + "’")) else f"{sentence} {word}"
+            if (word in string_punctuation()):
+                sentence = f"{sentence}{word}"
+            else:
+                sentence = f"{sentence}{word}" if last_char(sentence) == "’" else f"{sentence} {word}"
             if (i == len(words)-1):
                 sentences.append(sentence)
         else:
