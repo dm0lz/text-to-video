@@ -169,6 +169,7 @@ def main():
         final_video = concatenate_videoclips(videos_array, method='compose')
         final_video_path = os.path.join(os.getcwd(), f"compilation_videos/compilation_output{i+0}.mp4")
         final_video.to_videofile(final_video_path, fps=60)
+        final_video.close()
         clean_media()
 
 
